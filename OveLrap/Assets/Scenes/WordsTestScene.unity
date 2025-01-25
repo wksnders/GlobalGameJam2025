@@ -458,17 +458,18 @@ MonoBehaviour:
   areaWidth: 50
   areaHeight: 50
   areaDepth: 50
-  secondsBetweenSpawn: 0
+  bubbleRadius: 2.5
+  secondsBetweenSpawn: 2
   wordBubbles: []
   adjectiveWordList: Wobbly,Snazzy,Fluffy,Squishy,Bumpy,Sparkly,Fuzzy,Soggy,Goofy,Silky,Nifty,Clunky,Zesty,Puffy,Lumpy,Chewy,Fizzy,Sassy,Giggly,Wacky,Slippery,Quirky,Jumpy,Drowsy,Loopy
   nounWordList: Pancake,Llama,Marshmallow,Banana,Jellybean,Tuba,Waffle,Pogo stick,Pickle,Unicorn,Cactus,Sock,Cupcake,Teapot,Balloon,Donut,Scooter,Giraffe,Meatball,Penguin,Bucket,Squirrel,Hedgehog,Taco,Pillow
   bubbleColors:
   - color: {r: 0.7058824, g: 0.21176471, b: 0.19215687, a: 0.7058824}
-    tone: 1
-  - color: {r: 1, g: 0.9019608, b: 0.40392157, a: 0.7058824}
     tone: 2
+  - color: {r: 1, g: 0.9019608, b: 0.40392157, a: 0.7058824}
+    tone: 3
   - color: {r: 0.4392157, g: 0.70980394, b: 0.3764706, a: 0.7058824}
-    tone: 0
+    tone: 1
 --- !u!1 &1146284858
 GameObject:
   m_ObjectHideFlags: 0
