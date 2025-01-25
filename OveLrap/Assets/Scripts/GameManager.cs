@@ -1,18 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISingleton<GameManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    private static GameManager _inst;
+    public static GameManager Instance
     {
-        
+        get
+        {
+            if (_inst == null)
+            {
+                _inst = GameObject.FindObjectOfType<GameManager>();
+            }
+            return _inst;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void MakeBubble(GameObject bubble, Vector3 worldPos)
     {
-        
+        GameObject entity = Instantiate(bubble, worldPos, Quaternion.identity);
+        //Add food to list
+        PlayspaceController.Instance.AddEntity(entity);
     }
 }
