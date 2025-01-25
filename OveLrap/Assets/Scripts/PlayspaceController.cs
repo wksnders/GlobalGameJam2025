@@ -32,6 +32,10 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
         entities.Remove(entity);
     }
 
+    public bool CanSpawnAgent() {
+        return true;
+    }
+
     public Dictionary<BubbleColors, int> getBubbleColorCounts()
     {//TODO
         return new Dictionary<BubbleColors, int>
