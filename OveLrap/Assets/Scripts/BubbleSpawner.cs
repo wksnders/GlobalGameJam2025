@@ -25,6 +25,7 @@ public class BubbleSpawner : MonoBehaviour
             GameObject newBubble = Instantiate(bubblePrefab, transform);
             Vector3 newPos = new Vector3();
             newPos.x = Random.Range(-randomSpawnDist, randomSpawnDist);
+            newPos.y = 5;
             newPos.z = Random.Range(-randomSpawnDist, randomSpawnDist);
             newBubble.transform.position = newPos;
             bubbles.Add(newBubble);
