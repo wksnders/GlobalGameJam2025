@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1831704728945208484}
   - component: {fileID: 2903004918485068620}
   - component: {fileID: 8502944522042887958}
-  - component: {fileID: 7010249837371094971}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Untagged
@@ -98,20 +97,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7010249837371094971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645432354312835286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5445ee875136945b49a1fbefd2b62e70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2084459074075536290
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,4 +316,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 6231703273687641104}
-  color: {r: 0, g: 0, b: 0, a: 0}
+  renderer: {fileID: 2903004918485068620}
+  currentColor: {r: 0, g: 0, b: 0, a: 0}

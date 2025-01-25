@@ -21,6 +21,12 @@ public class WordSpawner : MonoBehaviour {
     private List<Word> adjectives = new List<Word>();
     private List<Word> nouns = new List<Word>();
 
+    // at start, there will be one of each color in noun and adjective list
+    // if there are 3 bubble colors, there will be 6 total
+    public List<BubbleColor> bubbleColors;
+    private Dictionary<int, BubbleColor> adjectiveBubbleColorMap = new Dictionary<int, BubbleColor>(); // index -> color
+    private Dictionary<int, BubbleColor> nounBubbleColorMap = new Dictionary<int, BubbleColor>(); // index -> color
+
     private void Start() {
         string[] adjectivesArray = adjectiveWordList.Split(',');
         foreach (string word in adjectivesArray) {
@@ -32,6 +38,28 @@ public class WordSpawner : MonoBehaviour {
             nouns.Add(new Word(word, WordType.Noun));
         }
 
+        // randomly select index of the word that will be spawned colored
+        foreach(var bubbleColor in bubbleColors)
+        {
+            // select index from adjectives
+            int randomIndex = Random.Range(0, adjectives.Count);
+            // if index is already in map, select another
+            while (adjectiveBubbleColorMap.ContainsKey(randomIndex)) {
+                randomIndex = Random.Range(0, adjectives.Count);
+            }
+            adjectiveBubbleColorMap[randomIndex] = bubbleColor;
+            Debug.Log("Adjective at index " + randomIndex + " will be " + bubbleColor.color);
+
+            // select index from nouns
+            randomIndex = Random.Range(0, nouns.Count);
+            // if index is already in map, select another
+            while (nounBubbleColorMap.ContainsKey(randomIndex)) {
+                randomIndex = Random.Range(0, nouns.Count);
+            }
+            nounBubbleColorMap[randomIndex] = bubbleColor;
+            Debug.Log("Noun at index " + randomIndex + " will be " + bubbleColor.color);
+        }
+
         //SpawnWordBubbles();
     }
 
@@ -41,17 +69,27 @@ public class WordSpawner : MonoBehaviour {
             GameObject wordBubble = Instantiate(wordBubblePrefab, randomPosition, Quaternion.identity);
             wordBubble.transform.parent = wordSpawnerRoot.transform;
             wordBubble.GetComponent<WordBubble>().SetWord(adjectives[i]);
+
+            // if word is in map, set color for starting bubble colors
+            if (adjectiveBubbleColorMap.ContainsKey(i)) {
+                wordBubble.GetComponent<WordBubble>().SetColor(adjectiveBubbleColorMap[i]);
+            }
         }
         for (int i = 0; i < nouns.Count; i++) {
             Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
             GameObject wordBubble = Instantiate(wordBubblePrefab, randomPosition, Quaternion.identity);
             wordBubble.transform.parent = wordSpawnerRoot.transform;
             wordBubble.GetComponent<WordBubble>().SetWord(nouns[i]);
+
+            // if word is in map, set color for starting bubble colors
+            if (nounBubbleColorMap.ContainsKey(i)) {
+                wordBubble.GetComponent<WordBubble>().SetColor(nounBubbleColorMap[i]);
+            }
         }
     }
 
-    // Reset
     public void Update() {
+        // Reset for quick debug
         if (Input.GetKeyDown(KeyCode.R)) {
             foreach (Transform child in wordSpawnerRoot.transform) {
                 Destroy(child.gameObject);
@@ -69,17 +107,31 @@ public class WordSpawner : MonoBehaviour {
             Word newWord;
             if( nextWordIsNoun )
             {
+                // Loops through list again?
                 if (nextWordNounIndex >= nouns.Count)
                     nextWordNounIndex = 0;
                 newWord = nouns[nextWordNounIndex];
+                
+                // if word is in map, set color for starting bubble colors
+                if (nounBubbleColorMap.ContainsKey(nextWordNounIndex)) {
+                    newWordBubble.GetComponent<WordBubble>().SetColor(nounBubbleColorMap[nextWordNounIndex]);
+                }
+
                 nextWordNounIndex++;
                 nextWordIsNoun = false;
             }
             else
             {
+                // Loops through list again?
                 if (nextWordAdjIndex >= adjectives.Count)
                     nextWordAdjIndex = 0;
                 newWord = adjectives[nextWordAdjIndex];
+
+                // if word is in map, set color for starting bubble colors
+                if (adjectiveBubbleColorMap.ContainsKey(nextWordAdjIndex)) {
+                    newWordBubble.GetComponent<WordBubble>().SetColor(adjectiveBubbleColorMap[nextWordAdjIndex]);
+                }
+
                 nextWordAdjIndex++;
                 nextWordIsNoun = true;
             }
@@ -102,4 +154,16 @@ public class Word {
         this.word = word;
         this.type = type;
     }
+}
+
+public enum BubbleTone {
+    Happy,
+    Angry,
+    Sad,
+}
+
+[System.Serializable]
+public class BubbleColor {
+    public Color color;
+    public BubbleTone tone;
 }

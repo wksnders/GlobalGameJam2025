@@ -7,13 +7,17 @@ public class WordBubble : MonoBehaviour
 {
     public Word word;
     public TextMeshPro text;
-    
-    public Color color;
+    public MeshRenderer renderer;
+    public BubbleColor currentColor;
 
-    public void SetWord(Word word)
-    {
+    public void SetWord(Word word) {
         this.word = word;
         text.text = word.word;
+    }
+
+    public void SetColor(BubbleColor color) {
+        currentColor = color;
+        renderer.material.color = currentColor.color;
     }
 
     // Point text toward camera
