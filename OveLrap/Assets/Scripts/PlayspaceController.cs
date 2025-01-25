@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,4 +32,13 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
         entities.Remove(entity);
     }
 
+    public Dictionary<BubbleColors, int> getBubbleColorCounts()
+    {//TODO
+        return new Dictionary<BubbleColors, int>
+        {
+            { BubbleColors.Red, 10 },
+            { BubbleColors.Blue, 15 },
+            { BubbleColors.Green, 20 }
+        };
+    }
 }
