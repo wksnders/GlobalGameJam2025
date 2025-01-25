@@ -8,6 +8,12 @@ public class WordSpawner : MonoBehaviour {
     public float areaWidth = 10f;
     public float areaHeight = 10f;
     public float areaDepth = 10f;
+    public int secondsBetweenSpawn;
+    public List<GameObject> wordBubbles;
+    float bubbleSpawnTimer = 0f;
+    bool nextWordIsNoun = false;
+    int nextWordNounIndex = 0;
+    int nextWordAdjIndex = 0;
 
     public string adjectiveWordList; // comma separated list of adjectives
     public string nounWordList; // comma separated list of nouns
@@ -26,7 +32,7 @@ public class WordSpawner : MonoBehaviour {
             nouns.Add(new Word(word, WordType.Noun));
         }
 
-        SpawnWordBubbles();
+        //SpawnWordBubbles();
     }
 
     private void SpawnWordBubbles() {
@@ -51,6 +57,34 @@ public class WordSpawner : MonoBehaviour {
                 Destroy(child.gameObject);
             }
             SpawnWordBubbles();
+        }
+
+        bubbleSpawnTimer += Time.deltaTime;
+        if (bubbleSpawnTimer > secondsBetweenSpawn)
+        {
+            bubbleSpawnTimer = 0f;
+            GameObject newWordBubble = Instantiate(wordBubblePrefab, wordSpawnerRoot.transform);
+            Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+            newWordBubble.transform.position = randomPosition;
+            Word newWord;
+            if( nextWordIsNoun )
+            {
+                if (nextWordNounIndex >= nouns.Count)
+                    nextWordNounIndex = 0;
+                newWord = nouns[nextWordNounIndex];
+                nextWordNounIndex++;
+                nextWordIsNoun = false;
+            }
+            else
+            {
+                if (nextWordAdjIndex >= adjectives.Count)
+                    nextWordAdjIndex = 0;
+                newWord = adjectives[nextWordAdjIndex];
+                nextWordAdjIndex++;
+                nextWordIsNoun = true;
+            }
+            newWordBubble.GetComponent<WordBubble>().SetWord(newWord);
+            wordBubbles.Add(newWordBubble);
         }
     }
 
