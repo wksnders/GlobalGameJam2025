@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController>
 {
     private static PlayspaceController _inst;
+
     public static PlayspaceController Instance
     {
         get
@@ -17,9 +18,11 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
             return _inst;
         }
     }
-
     private List<GameObject> entities = new List<GameObject>();
     public List<GameObject> Bubbles;
+
+    [Tooltip("starting number of placable agents.")]
+    public int NumPlaceableAgents = 0;
 
 
     public void AddEntity(GameObject entity)
