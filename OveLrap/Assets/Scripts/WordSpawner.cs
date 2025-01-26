@@ -8,6 +8,7 @@ public class WordSpawner : MonoBehaviour {
     public float areaWidth = 10f;
     public float areaHeight = 10f;
     public float areaDepth = 10f;
+    public float bubbleRadius = 2.5f; // scale of the uniform sphere / 2. Used for checking collisions
     public int secondsBetweenSpawn;
     public List<GameObject> wordBubbles;
     float bubbleSpawnTimer = 0f;
@@ -48,7 +49,6 @@ public class WordSpawner : MonoBehaviour {
                 randomIndex = Random.Range(0, adjectives.Count);
             }
             adjectiveBubbleColorMap[randomIndex] = bubbleColor;
-            Debug.Log("Adjective at index " + randomIndex + " will be " + bubbleColor.color);
 
             // select index from nouns
             randomIndex = Random.Range(0, nouns.Count);
@@ -57,53 +57,35 @@ public class WordSpawner : MonoBehaviour {
                 randomIndex = Random.Range(0, nouns.Count);
             }
             nounBubbleColorMap[randomIndex] = bubbleColor;
-            Debug.Log("Noun at index " + randomIndex + " will be " + bubbleColor.color);
         }
 
-        //SpawnWordBubbles();
-    }
-
-    private void SpawnWordBubbles() {
-        for (int i = 0; i < adjectives.Count; i++) {
-            Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
-            GameObject wordBubble = Instantiate(wordBubblePrefab, randomPosition, Quaternion.identity);
-            wordBubble.transform.parent = wordSpawnerRoot.transform;
-            wordBubble.GetComponent<WordBubble>().SetWord(adjectives[i]);
-
-            // if word is in map, set color for starting bubble colors
-            if (adjectiveBubbleColorMap.ContainsKey(i)) {
-                wordBubble.GetComponent<WordBubble>().SetColor(adjectiveBubbleColorMap[i]);
-            }
-        }
-        for (int i = 0; i < nouns.Count; i++) {
-            Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
-            GameObject wordBubble = Instantiate(wordBubblePrefab, randomPosition, Quaternion.identity);
-            wordBubble.transform.parent = wordSpawnerRoot.transform;
-            wordBubble.GetComponent<WordBubble>().SetWord(nouns[i]);
-
-            // if word is in map, set color for starting bubble colors
-            if (nounBubbleColorMap.ContainsKey(i)) {
-                wordBubble.GetComponent<WordBubble>().SetColor(nounBubbleColorMap[i]);
-            }
-        }
     }
 
     public void Update() {
-        // Reset for quick debug
-        if (Input.GetKeyDown(KeyCode.R)) {
-            foreach (Transform child in wordSpawnerRoot.transform) {
-                Destroy(child.gameObject);
-            }
-            SpawnWordBubbles();
-        }
-
         bubbleSpawnTimer += Time.deltaTime;
         if (bubbleSpawnTimer > secondsBetweenSpawn)
         {
             bubbleSpawnTimer = 0f;
-            GameObject newWordBubble = Instantiate(wordBubblePrefab, wordSpawnerRoot.transform);
             Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+
+            // if bubble is colliding with another bubble, reposition
+            // after X number of attempts, just destroy the bubble. This could happen if there's no space for the bubble to spawn
+            int attempts = 0;
+            Collider[] colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
+            while (colliders.Length > 0 && attempts < 10) {
+                randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+                colliders = Physics.OverlapSphere(randomPosition, 1f);
+                attempts++;
+                Debug.Log("Spawn collision. Repositioning bubble. Attempt: " + attempts);
+            }
+
+            if (attempts >= 10) {
+                return;
+            }
+
+            GameObject newWordBubble = Instantiate(wordBubblePrefab, wordSpawnerRoot.transform);
             newWordBubble.transform.position = randomPosition;
+
             Word newWord;
             if( nextWordIsNoun )
             {
@@ -144,7 +126,8 @@ public class WordSpawner : MonoBehaviour {
 
 public enum WordType {
     Adjective,
-    Noun
+    Noun,
+    Pair
 }
 
 public class Word {
@@ -157,6 +140,7 @@ public class Word {
 }
 
 public enum BubbleTone {
+    None,
     Happy,
     Angry,
     Sad,
