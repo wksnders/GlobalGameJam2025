@@ -78,7 +78,7 @@ public class TopBarPercentDisplay : MonoBehaviour
 
             // Look for target count else target is 0
             float percentage = totalCount == 0 ? 0 : (float)count / totalCount;
-            Debug.Log("Percentage: " + percentage + "(" + count + "/" + totalCount + ") for " + entityDisplay.type);
+            //Debug.Log("Percentage: " + percentage + "(" + count + "/" + totalCount + ") for " + entityDisplay.type);
 
             // Adjust the segment size and position
             RectTransform segmentRect = entityDisplay.barSegment.GetComponent<RectTransform>();
