@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class WordSpawner : MonoBehaviour {
     public GameObject wordSpawnerRoot;
     public GameObject wordBubblePrefab;
     public float areaWidth = 10f;
-    public float areaHeight = 10f;
     public float areaDepth = 10f;
-    public float bubbleRadius = 2.5f; // scale of the uniform sphere / 2. Used for checking collisions
+    public float bubbleRadius = 4f; // scale of the uniform sphere / 2. Used for checking collisions
     public int secondsBetweenSpawn;
     public List<GameObject> wordBubbles;
     float bubbleSpawnTimer = 0f;
@@ -66,19 +66,18 @@ public class WordSpawner : MonoBehaviour {
         if (bubbleSpawnTimer > secondsBetweenSpawn && wordBubbles.Count <= PlayspaceController.Instance.goalPairs * 2)
         {
             bubbleSpawnTimer = 0f;
-            Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
-            //Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z);
 
-            // if bubble is colliding with another bubble, reposition
+            Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y, wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+
+            // if bubble is colliding with another bubble (collider with tag Bubble), reposition.
             // after X number of attempts, just destroy the bubble. This could happen if there's no space for the bubble to spawn
             int attempts = 0;
             Collider[] colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
-            while (colliders.Length > 0 && attempts < 10) {
-                randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
-                //randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z);
+            while (colliders.Count(x => x.CompareTag("Bubble")) > 0 && attempts < 10) {
+                randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y, wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
                 colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
                 attempts++;
-                Debug.Log("Spawn collision. Repositioning bubble. Attempt: " + attempts);
+                Debug.Log("Spawn collision at " + randomPosition + ". Repositioning bubble. Attempt: " + attempts);
             }
 
             if (attempts >= 10) {
