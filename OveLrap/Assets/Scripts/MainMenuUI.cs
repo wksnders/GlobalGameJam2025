@@ -8,6 +8,7 @@ public class MainMenuUI : MonoBehaviour
 	public GameObject MainMenu;
 	public GameObject OptionsMenu;
 	public GameObject InstructionsMenu;
+	public GameObject CreditsMenu;
 	public bool withInstructions = true;
 
 	public void HandleTutorialOnOff(bool value) {
@@ -32,6 +33,11 @@ public class MainMenuUI : MonoBehaviour
 	{
 		MainMenu.SetActive(false);
 		OptionsMenu.SetActive(true);
+	}
+
+	public void credits() {
+		MainMenu.SetActive(false);
+		CreditsMenu.SetActive(true);
 	}
 
 	public void back()
