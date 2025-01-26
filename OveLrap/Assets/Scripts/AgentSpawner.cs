@@ -13,6 +13,10 @@ public class AgentSpawner : MonoBehaviour
     bool isDragging = false;
     GameObject dragAgent;
 
+    [Header("SFX")]
+    public AudioSource audioSource;
+    public AudioClip spawnAgentSFX;
+
     void Start()
     {
         
@@ -47,6 +51,7 @@ public class AgentSpawner : MonoBehaviour
                     dragAgent.transform.position = newPos;
                     agents.Add(dragAgent);
                     isDragging = true;
+                    audioSource.PlayOneShot(spawnAgentSFX);
                 }
             }
         }

@@ -312,6 +312,7 @@ MonoBehaviour:
   audioSource: {fileID: 2792033317160038495}
   scaleMultiplier: 1.5
   mergeBubbleSFX: {fileID: 8300000, guid: 0b332df522ae448e3bf93d612aea6d79, type: 3}
+  spawnBubbleSFX: {fileID: 8300000, guid: 615844e61365e4dcc96cc2c29bc94864, type: 3}
 --- !u!135 &3366365920971665515
 SphereCollider:
   m_ObjectHideFlags: 0

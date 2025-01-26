@@ -14,16 +14,21 @@ public class WordBubble : MonoBehaviour
 
     [Header("SFX")]
     public AudioClip mergeBubbleSFX;
+    public AudioClip spawnBubbleSFX;
 
     bool SetupDone = false;
     public bool IsColliding { get; private set; }
 
+    // Called once when we first spawn a bubble (noun or adjective, not a pair which uses append words)
     public void SetWord(Word word) {
         this.word = word;
         text.text = word.word;
         SetupDone = true;
+
+        audioSource.PlayOneShot(spawnBubbleSFX);
     }
 
+    // Called when we merge two bubbles together
     public void AppendWords(Word firstWord, Word secondWord) {
         string newText = "";
 
