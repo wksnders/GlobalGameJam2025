@@ -27,18 +27,21 @@ public class WordSpawner : MonoBehaviour {
         foreach (string word in adjectivesArray) {
             adjectives.Add(new Word(word, WordType.Adjective));
         }
+        // randomize the list
+        adjectives = adjectives.OrderBy(x => Random.value).ToList();
 
         string[] nounsArray = nounWordList.Split(',');
         foreach (string word in nounsArray) {
             nouns.Add(new Word(word, WordType.Noun));
         }
+        // randomize the list
+        nouns = nouns.OrderBy(x => Random.value).ToList();
 
     }
 
     public void Update() {
         bubbleSpawnTimer += Time.deltaTime;
-        // spawn bubbles every X seconds until there is max bubbles, goal is to get many pairs
-        if (bubbleSpawnTimer > secondsBetweenSpawn && wordBubbles.Count <= PlayspaceController.Instance.goalPairs * 2)
+        if (bubbleSpawnTimer > secondsBetweenSpawn)
         {
             bubbleSpawnTimer = 0f;
 

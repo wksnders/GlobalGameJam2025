@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour, ISingleton<GameManager>
 {
@@ -18,11 +19,33 @@ public class GameManager : MonoBehaviour, ISingleton<GameManager>
         }
     }
 
+    public GameObject EndGamePanel;
+    public TextMeshProUGUI PhrasesText;
 
-    public void MakeBubble(GameObject bubble, Vector3 worldPos)
-    {
-        GameObject entity = Instantiate(bubble, worldPos, Quaternion.identity);
-        //Add food to list
-        PlayspaceController.Instance.AddEntity(entity);
+    void Start() {
+        EndGamePanel.SetActive(false);
+    }
+
+    void Update() {
+        CheckForWin();
+    }
+
+    public void CheckForWin() {
+        if (PlayspaceController.Instance.currentNumberOfPairs >= PlayspaceController.Instance.goalPairs) {
+            Debug.Log("You win!");
+
+            GetAllPairWords();
+            EndGamePanel.SetActive(true);
+        }
+    }
+
+    // Get all the pairs, color them based on color
+    void GetAllPairWords() {
+        string phrase = "";
+        foreach (WordBubble pair in PlayspaceController.Instance.pairs) {
+            // add color html to phrase
+            phrase += "<color=#" + ColorUtility.ToHtmlStringRGB(pair.currentColor.color) + ">" + pair.word.word + "</color>\n";
+        }
+        PhrasesText.text = phrase;
     }
 }

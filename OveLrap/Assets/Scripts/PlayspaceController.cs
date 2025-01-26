@@ -21,7 +21,9 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
     private List<GameObject> entities = new List<GameObject>();
     public List<BubbleColor> bubbleColors;
     private Dictionary<BubbleColor, int> bubbleColorCounts = new Dictionary<BubbleColor, int>();
+    [NonSerialized] public List<WordBubble> pairs = new List<WordBubble>();
 
+    [NonSerialized] public int currentNumberOfPairs = 0;
     public int goalPairs = 10; // how many pairs are needed to win
 
     [Tooltip("starting number of placable agents.")]
@@ -69,6 +71,8 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
         } else {
             bubbleColorCounts[color] = 1;
         }
+        currentNumberOfPairs++;
+        pairs.Add(bubble);
     }
 }
 
