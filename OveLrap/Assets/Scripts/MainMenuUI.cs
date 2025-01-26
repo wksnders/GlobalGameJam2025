@@ -44,6 +44,7 @@ public class MainMenuUI : MonoBehaviour
 	{
 		MainMenu.SetActive(true);
 		OptionsMenu.SetActive(false);
+		CreditsMenu.SetActive(false);
 	}
 
 	public void exitGame()

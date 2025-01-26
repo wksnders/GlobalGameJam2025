@@ -1885,6 +1885,11 @@ RectTransform:
   m_AnchoredPosition: {x: 512, y: -288.04944}
   m_SizeDelta: {x: 400, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1186825172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6462585729872109365, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+  m_PrefabInstance: {fileID: 2611094289940217948}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1284688148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,7 +1949,7 @@ MonoBehaviour:
   MainMenu: {fileID: 1910148188}
   OptionsMenu: {fileID: 933360451}
   InstructionsMenu: {fileID: 439486291}
-  CreditsMenu: {fileID: 1632708089}
+  CreditsMenu: {fileID: 1186825172}
   withInstructions: 1
 --- !u!114 &1284688151
 MonoBehaviour:
@@ -2421,7 +2426,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1284688150}
         m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
-        m_MethodName: options
+        m_MethodName: credits
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3461,6 +3466,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464310068863683118, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464310068863683118, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464310068863683118, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464310068863683118, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -476.03595
+      objectReference: {fileID: 0}
     - target: {fileID: 4842702286729235646, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3468,6 +3489,42 @@ PrefabInstance:
     - target: {fileID: 6462585729872109365, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
       propertyPath: m_Name
       value: CreditsMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462585729872109365, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262003784358888679, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262003784358888679, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262003784358888679, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262003784358888679, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -287.36755
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145521292717511440, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145521292717511440, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145521292717511440, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145521292717511440, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -98.69919
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c8dcfd91b8d34da1b67b1192fc04d34, type: 3}
