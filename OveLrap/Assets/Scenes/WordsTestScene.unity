@@ -459,7 +459,7 @@ MonoBehaviour:
   areaHeight: 50
   areaDepth: 50
   bubbleRadius: 2.5
-  secondsBetweenSpawn: 2
+  secondsBetweenSpawn: 1
   wordBubbles: []
   adjectiveWordList: Wobbly,Snazzy,Fluffy,Squishy,Bumpy,Sparkly,Fuzzy,Soggy,Goofy,Silky,Nifty,Clunky,Zesty,Puffy,Lumpy,Chewy,Fizzy,Sassy,Giggly,Wacky,Slippery,Quirky,Jumpy,Drowsy,Loopy
   nounWordList: Pancake,Llama,Marshmallow,Banana,Jellybean,Tuba,Waffle,Pogo stick,Pickle,Unicorn,Cactus,Sock,Cupcake,Teapot,Balloon,Donut,Scooter,Giraffe,Meatball,Penguin,Bucket,Squirrel,Hedgehog,Taco,Pillow

@@ -126,7 +126,8 @@ public class WordSpawner : MonoBehaviour {
 
 public enum WordType {
     Adjective,
-    Noun
+    Noun,
+    Pair
 }
 
 public class Word {
