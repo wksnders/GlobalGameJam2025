@@ -22,7 +22,7 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
     public List<GameObject> Bubbles;
 
     [Tooltip("starting number of placable agents.")]
-    public int NumPlaceableAgents = 0;
+    public int NumPlaceableAgents = 3;
 
 
     public void AddEntity(GameObject entity)
@@ -35,7 +35,12 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
         entities.Remove(entity);
     }
 
-    public bool CanSpawnAgent() {
+    public bool TrySpawnAgent() {
+        if (NumPlaceableAgents <= 0) {
+            NumPlaceableAgents = 0;
+            return false;
+        }
+        NumPlaceableAgents--;
         return true;
     }
 

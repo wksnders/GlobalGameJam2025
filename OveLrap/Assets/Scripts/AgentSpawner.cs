@@ -18,7 +18,7 @@ public class AgentSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && PlayspaceController.Instance.CanSpawnAgent())//need to add PlayspaceController to scene
+        if (Input.GetMouseButtonDown(0) && PlayspaceController.Instance.TrySpawnAgent())//need to add PlayspaceController to scene
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from mouse down
             RaycastHit hit;
