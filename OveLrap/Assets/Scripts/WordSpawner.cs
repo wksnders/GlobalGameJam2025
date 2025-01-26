@@ -84,6 +84,7 @@ public class WordSpawner : MonoBehaviour {
             }
 
             GameObject newWordBubble = Instantiate(wordBubblePrefab, wordSpawnerRoot.transform);
+            newWordBubble.layer = 3;
             newWordBubble.transform.position = randomPosition;
 
             Word newWord;

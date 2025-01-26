@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AgentSpawner : MonoBehaviour
 {
+    public WordSpawner wordSpawner;
+
     public GameObject agentPrefab;
     public float dragRotateSlerpSpeed;
     public List<GameObject> agents;
@@ -18,13 +20,13 @@ public class AgentSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && PlayspaceController.Instance.TrySpawnAgent())//need to add PlayspaceController to scene
+        if (Input.GetMouseButtonDown(0))// && PlayspaceController.Instance.TrySpawnAgent())//need to add PlayspaceController to scene
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from mouse down
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) // Check if ray hits a collider
+            if (Physics.Raycast(ray, out hit/*, ~(1 << 6)*/)) // Check if ray hits the collider on the floor layer
             {
-                if (hit.collider.tag == "Floor")
+                //if (hit.collider.tag == "Floor")
                 {
                     // Spawn object at adjusted hit point
                     Vector3 newPos = new Vector3();
@@ -32,6 +34,7 @@ public class AgentSpawner : MonoBehaviour
                     newPos.y = hit.point.y;
                     newPos.z = hit.point.z;
                     dragAgent = Instantiate(agentPrefab, transform);
+                    dragAgent.GetComponent<AgentWind>().wordBubbleSpawner = wordSpawner;
                     dragAgent.transform.position = newPos;
                     agents.Add(dragAgent);
                     isDragging = true;
@@ -43,14 +46,14 @@ public class AgentSpawner : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from mouse up
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) // Check if ray hits a collider
+            if (Physics.Raycast(ray, out hit/*, ~(1 << 6)*/)) // Check if ray hits a collider
             {
-                if (hit.collider.tag == "Floor")
+                //if (hit.collider.tag == "Floor")
                 {
                     // find the vector pointing from our position to the adjusted drag hit pos
                     Vector3 hitPos = new Vector3();
                     hitPos.x = hit.point.x;
-                    hitPos.y = hit.point.y;
+                    hitPos.y = dragAgent.transform.position.y;
                     hitPos.z = hit.point.z;
                     Vector3 direction = (hitPos - dragAgent.transform.position).normalized;
 
