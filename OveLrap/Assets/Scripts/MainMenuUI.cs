@@ -7,7 +7,22 @@ public class MainMenuUI : MonoBehaviour
 {
 	public GameObject MainMenu;
 	public GameObject OptionsMenu;
+	public GameObject InstructionsMenu;
+	public bool withInstructions = true;
 
+	public void HandleTutorialOnOff(bool value) {
+		withInstructions = value;
+	}
+
+	public void HandleStart()
+	{
+		if (!withInstructions) {
+			playGame();
+			return;
+		}
+		MainMenu.SetActive(false);
+		InstructionsMenu.SetActive(true);
+	}
 	public void playGame()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
