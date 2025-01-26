@@ -1,6 +1,6 @@
-OveLrap! A game created for the Global Game Jam and The 2025 United with Ukraine Game Jam: Ctrl+Alt+Disinfo
+#OveLrap! 
+A game created for the Global Game Jam and The 2025 United with Ukraine Game Jam: Ctrl+Alt+Disinfo
 
-# GlobalGameJam2025
 Global Game Jam 2025 Theme: Bubble
 
 Created by: 
