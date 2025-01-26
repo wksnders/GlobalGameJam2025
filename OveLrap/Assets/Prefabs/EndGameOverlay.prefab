@@ -681,7 +681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Newspaper Finished!
+  m_text: Mission Accomplished
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1105c698219e743828a3ec036bbda65b, type: 2}
   m_sharedMaterial: {fileID: -7179913512685695176, guid: 1105c698219e743828a3ec036bbda65b, type: 2}
