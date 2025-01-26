@@ -22,11 +22,6 @@ public class WordSpawner : MonoBehaviour {
     private List<Word> adjectives = new List<Word>();
     private List<Word> nouns = new List<Word>();
 
-    // at start, there will be one of each color in noun and adjective list
-    // if there are 3 bubble colors, there will be 6 total
-    private Dictionary<int, BubbleColor> adjectiveBubbleColorMap = new Dictionary<int, BubbleColor>(); // index -> color
-    private Dictionary<int, BubbleColor> nounBubbleColorMap = new Dictionary<int, BubbleColor>(); // index -> color
-
     private void Start() {
         string[] adjectivesArray = adjectiveWordList.Split(',');
         foreach (string word in adjectivesArray) {
@@ -36,26 +31,6 @@ public class WordSpawner : MonoBehaviour {
         string[] nounsArray = nounWordList.Split(',');
         foreach (string word in nounsArray) {
             nouns.Add(new Word(word, WordType.Noun));
-        }
-
-        // randomly select index of the word that will be spawned colored
-        foreach(var bubbleColor in PlayspaceController.Instance.bubbleColors)
-        {
-            // select index from adjectives
-            int randomIndex = Random.Range(0, adjectives.Count);
-            // if index is already in map, select another
-            while (adjectiveBubbleColorMap.ContainsKey(randomIndex)) {
-                randomIndex = Random.Range(0, adjectives.Count);
-            }
-            adjectiveBubbleColorMap[randomIndex] = bubbleColor;
-
-            // select index from nouns
-            randomIndex = Random.Range(0, nouns.Count);
-            // if index is already in map, select another
-            while (nounBubbleColorMap.ContainsKey(randomIndex)) {
-                randomIndex = Random.Range(0, nouns.Count);
-            }
-            nounBubbleColorMap[randomIndex] = bubbleColor;
         }
 
     }
@@ -95,10 +70,13 @@ public class WordSpawner : MonoBehaviour {
                 if (nextWordNounIndex >= nouns.Count)
                     nextWordNounIndex = 0;
                 newWord = nouns[nextWordNounIndex];
-                
-                // if word is in map, set color for starting bubble colors
-                if (nounBubbleColorMap.ContainsKey(nextWordNounIndex)) {
-                    newWordBubble.GetComponent<WordBubble>().SetColor(nounBubbleColorMap[nextWordNounIndex]);
+
+                // randomly set color, more likely to be none color
+                var randomColor = Random.Range(0, 6); // 0, 1, 2 = colored, 3,4,5 = none
+                if (randomColor >= 3) {
+                    newWordBubble.GetComponent<WordBubble>().SetColor(PlayspaceController.Instance.bubbleColors[3]);
+                } else {
+                    newWordBubble.GetComponent<WordBubble>().SetColor(PlayspaceController.Instance.bubbleColors[randomColor]);
                 }
 
                 nextWordNounIndex++;
@@ -111,9 +89,12 @@ public class WordSpawner : MonoBehaviour {
                     nextWordAdjIndex = 0;
                 newWord = adjectives[nextWordAdjIndex];
 
-                // if word is in map, set color for starting bubble colors
-                if (adjectiveBubbleColorMap.ContainsKey(nextWordAdjIndex)) {
-                    newWordBubble.GetComponent<WordBubble>().SetColor(adjectiveBubbleColorMap[nextWordAdjIndex]);
+                // randomly set color, more likely to be none color
+                var randomColor = Random.Range(0, 6); // 0, 1, 2 = colored, 3,4,5 = none
+                if (randomColor >= 3) {
+                    newWordBubble.GetComponent<WordBubble>().SetColor(PlayspaceController.Instance.bubbleColors[3]);
+                } else {
+                    newWordBubble.GetComponent<WordBubble>().SetColor(PlayspaceController.Instance.bubbleColors[randomColor]);
                 }
 
                 nextWordAdjIndex++;
@@ -121,6 +102,31 @@ public class WordSpawner : MonoBehaviour {
             }
             newWordBubble.GetComponent<WordBubble>().SetWord(newWord);
             wordBubbles.Add(newWordBubble);
+        }
+    }
+
+    // Reposition all bubbles in the playspace, useful if a bubble goes out of bounds
+    public void RepositionBubbles() {
+        foreach (GameObject bubble in wordBubbles) {
+            Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y, wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+
+            // if bubble is colliding with another bubble (collider with tag Bubble), reposition.
+            // after X number of attempts, just destroy the bubble. This could happen if there's no space for the bubble to spawn
+            int attempts = 0;
+            Collider[] colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
+            while (colliders.Count(x => x.CompareTag("Bubble")) > 0 && attempts < 10) {
+                randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y, wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+                colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
+                attempts++;
+                Debug.Log("Spawn collision at " + randomPosition + ". Repositioning bubble. Attempt: " + attempts);
+            }
+
+            if (attempts >= 10) {
+                return;
+            }
+
+            if(bubble != null) // check if bubble is not destroyed if they happen to collide with each other
+                bubble.transform.position = randomPosition;
         }
     }
 
