@@ -427,6 +427,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!1 &1101749217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1101749219}
+  - component: {fileID: 1101749218}
+  m_Layer: 0
+  m_Name: controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1101749218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101749217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b00685b2a094446849194438e5f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bubbles: []
+  NumPlaceableAgents: 0
+--- !u!4 &1101749219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101749217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 585.5931, y: 287.13712, z: -7.019071}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1328149848
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,10 +507,12 @@ MonoBehaviour:
   areaWidth: 20
   areaHeight: 0
   areaDepth: 20
+  bubbleRadius: 2.5
   secondsBetweenSpawn: 3
   wordBubbles: []
   adjectiveWordList: Wobbly,Snazzy,Fluffy,Squishy,Bumpy,Sparkly,Fuzzy,Soggy,Goofy,Silky,Nifty,Clunky,Zesty,Puffy,Lumpy,Chewy,Fizzy,Sassy,Giggly,Wacky,Slippery,Quirky,Jumpy,Drowsy,Loopy
   nounWordList: Pancake,Llama,Marshmallow,Banana,Jellybean,Tuba,Waffle,Pogo stick,Pickle,Unicorn,Cactus,Sock,Cupcake,Teapot,Balloon,Donut,Scooter,Giraffe,Meatball,Penguin,Bucket,Squirrel,Hedgehog,Taco,Pillow
+  bubbleColors: []
 --- !u!4 &1328149850
 Transform:
   m_ObjectHideFlags: 0
