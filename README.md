@@ -11,7 +11,7 @@ Kroth(wksnders on github) Programmer
 Vazor(vazor222 on github) Programmer  
 Kristin Agcaoili(Kristin Agcaoili on github) Programmer  
 Breann Evans(BreannEvans on github) Artist  
-Gregory Blunt Composer  
+Gregory Blunt(Numbchops on github) Composer  
 
 ### Tools : 
 Made in Unity  
