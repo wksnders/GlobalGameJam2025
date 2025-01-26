@@ -28,5 +28,10 @@ public class MainMenuUI : MonoBehaviour
 	public void exitGame()
 	{
 		Application.Quit();
+
+		// For testing in editor
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
 	}
 }
