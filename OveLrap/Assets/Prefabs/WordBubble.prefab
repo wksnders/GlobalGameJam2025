@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 8110636299211744661}
   - component: {fileID: 3366365920971665515}
   - component: {fileID: 1743337204359707400}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WordBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ MonoBehaviour:
   currentColor:
     color: {r: 0, g: 0, b: 0, a: 0}
     tone: 0
-  IsColliding: 0
+  scaleMultiplier: 1.5
 --- !u!135 &3366365920971665515
 SphereCollider:
   m_ObjectHideFlags: 0
