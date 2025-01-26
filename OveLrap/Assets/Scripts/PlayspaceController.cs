@@ -24,6 +24,7 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
     [NonSerialized] public List<WordBubble> pairs = new List<WordBubble>();
 
     [NonSerialized] public int currentNumberOfPairs = 0;
+    [Tooltip("number of pairs are needed to win.")]
     public int goalPairs = 10; // how many pairs are needed to win
 
     [Tooltip("starting number of placable agents.")]
@@ -65,6 +66,9 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
     // Spawn a new bubble, like at start
     // Only counts PAIR types such as [Adjective + Noun]
     public void IncrementPairBubbleCount(WordBubble bubble) {
+        if (GameManager.Instance.isGameOver) {
+            return; //jank but now no more pairs happen after game over.
+        }
         var color = bubble.currentColor;
         if (bubbleColorCounts.ContainsKey(color)) {
             bubbleColorCounts[color]++;
@@ -73,6 +77,8 @@ public class PlayspaceController : MonoBehaviour, ISingleton<PlayspaceController
         }
         currentNumberOfPairs++;
         pairs.Add(bubble);
+
+        GameManager.Instance.CheckForWin();
     }
 }
 

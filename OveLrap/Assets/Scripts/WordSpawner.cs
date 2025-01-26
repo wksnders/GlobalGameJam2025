@@ -40,6 +40,11 @@ public class WordSpawner : MonoBehaviour {
     }
 
     public void Update() {
+
+        if (GameManager.Instance.isGameOver)
+        {
+            return;
+        }
         bubbleSpawnTimer += Time.deltaTime;
         if (bubbleSpawnTimer > secondsBetweenSpawn)
         {

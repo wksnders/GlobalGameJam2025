@@ -21,13 +21,15 @@ public class GameManager : MonoBehaviour, ISingleton<GameManager>
 
     public GameObject EndGamePanel;
     public TextMeshProUGUI PhrasesText;
+    [HideInInspector]
+    public bool isGameOver = false;
 
     void Start() {
         EndGamePanel.SetActive(false);
     }
 
     void Update() {
-        CheckForWin();
+
     }
 
     public void CheckForWin() {
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour, ISingleton<GameManager>
 
             GetAllPairWords();
             EndGamePanel.SetActive(true);
+            isGameOver = true;
         }
     }
 

@@ -18,6 +18,9 @@ public class BubbleSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.isGameOver) {
+            return;
+        }
         bubbleSpawnTimer += Time.deltaTime;
         if( bubbleSpawnTimer > secondsBetweenSpawn )
         {

@@ -91,8 +91,14 @@ public class WordBubble : MonoBehaviour
     
 
     private void HandleColorChange(WordBubble colliding) {
+
+        if (GameManager.Instance.isGameOver)
+        {
+            return;
+        }
+
         // if this bubble is already colored, do nothing. only non-colored bubbles will take the color.
-        if(currentColor.tone != BubbleTone.None) {
+        if (currentColor.tone != BubbleTone.None) {
             return;
         }
 

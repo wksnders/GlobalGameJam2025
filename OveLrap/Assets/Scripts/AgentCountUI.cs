@@ -25,6 +25,9 @@ public class AgentCountUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.isGameOver) {
+            return;
+        }
         if(MaxCharges > 0)
         {
             if (PlayspaceController.Instance.NumPlaceableAgents >= MaxCharges)
