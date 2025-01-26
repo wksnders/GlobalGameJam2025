@@ -18,6 +18,15 @@ public class AgentSpawner : MonoBehaviour
         
     }
 
+    public void ClearAgents()
+    {
+        foreach (GameObject agent in agents)
+        {
+            Destroy(agent);
+        }
+        agents.Clear();
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))// && PlayspaceController.Instance.TrySpawnAgent())//need to add PlayspaceController to scene
