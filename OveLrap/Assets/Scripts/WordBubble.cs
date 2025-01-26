@@ -9,7 +9,11 @@ public class WordBubble : MonoBehaviour
     public TextMeshPro text;
     public MeshRenderer renderer;
     public BubbleColor currentColor;
+    public AudioSource audioSource;
     public float scaleMultiplier = 1.5f; // growth of bubble when it becomes a pair
+
+    [Header("SFX")]
+    public AudioClip mergeBubbleSFX;
 
     bool SetupDone = false;
     public bool IsColliding { get; private set; }
@@ -43,6 +47,11 @@ public class WordBubble : MonoBehaviour
     void Update() {
         transform.LookAt(Camera.main.transform);
         transform.Rotate(0, 180, 0);
+
+        // DEBUG
+        if(Input.GetKeyDown(KeyCode.M)) {
+            audioSource.PlayOneShot(mergeBubbleSFX);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -102,8 +111,11 @@ public class WordBubble : MonoBehaviour
             Debug.Log("Color spread from " + colliding.word.word + " to " + word.word);
             AppendWords(word, colliding.word);
             SetColor(colliding.currentColor);
+            // add bubble to list of pair counts for goal tracking
+            PlayspaceController.Instance.IncrementPairBubbleCount(this);
             Destroy(colliding.gameObject);
             transform.localScale *= scaleMultiplier;
+            audioSource.PlayOneShot(mergeBubbleSFX);
         }
     }
 }

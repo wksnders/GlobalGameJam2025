@@ -24,7 +24,6 @@ public class WordSpawner : MonoBehaviour {
 
     // at start, there will be one of each color in noun and adjective list
     // if there are 3 bubble colors, there will be 6 total
-    public List<BubbleColor> bubbleColors;
     private Dictionary<int, BubbleColor> adjectiveBubbleColorMap = new Dictionary<int, BubbleColor>(); // index -> color
     private Dictionary<int, BubbleColor> nounBubbleColorMap = new Dictionary<int, BubbleColor>(); // index -> color
 
@@ -40,7 +39,7 @@ public class WordSpawner : MonoBehaviour {
         }
 
         // randomly select index of the word that will be spawned colored
-        foreach(var bubbleColor in bubbleColors)
+        foreach(var bubbleColor in PlayspaceController.Instance.bubbleColors)
         {
             // select index from adjectives
             int randomIndex = Random.Range(0, adjectives.Count);
@@ -63,10 +62,12 @@ public class WordSpawner : MonoBehaviour {
 
     public void Update() {
         bubbleSpawnTimer += Time.deltaTime;
-        if (bubbleSpawnTimer > secondsBetweenSpawn)
+        // spawn bubbles every X seconds until there is max bubbles, goal is to get many pairs
+        if (bubbleSpawnTimer > secondsBetweenSpawn && wordBubbles.Count <= PlayspaceController.Instance.goalPairs * 2)
         {
             bubbleSpawnTimer = 0f;
             Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
+            //Vector3 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z);
 
             // if bubble is colliding with another bubble, reposition
             // after X number of attempts, just destroy the bubble. This could happen if there's no space for the bubble to spawn
@@ -74,7 +75,8 @@ public class WordSpawner : MonoBehaviour {
             Collider[] colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
             while (colliders.Length > 0 && attempts < 10) {
                 randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z + Random.Range(-areaDepth / 2, areaDepth / 2));
-                colliders = Physics.OverlapSphere(randomPosition, 1f);
+                //randomPosition = new Vector3(wordSpawnerRoot.transform.position.x + Random.Range(-areaWidth / 2, areaWidth / 2), wordSpawnerRoot.transform.position.y + Random.Range(-areaHeight / 2, areaHeight / 2), wordSpawnerRoot.transform.position.z);
+                colliders = Physics.OverlapSphere(randomPosition, bubbleRadius);
                 attempts++;
                 Debug.Log("Spawn collision. Repositioning bubble. Attempt: " + attempts);
             }
@@ -138,17 +140,4 @@ public class Word {
         this.word = word;
         this.type = type;
     }
-}
-
-public enum BubbleTone {
-    None,
-    Happy,
-    Angry,
-    Sad,
-}
-
-[System.Serializable]
-public class BubbleColor {
-    public Color color;
-    public BubbleTone tone;
 }
